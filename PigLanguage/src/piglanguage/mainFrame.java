@@ -24,40 +24,95 @@ public class mainFrame extends javax.swing.JFrame {
     public mainFrame() {
         initComponents();
     }
-private String abrirArchivo() {
-  String aux="";   
-  String texto="";
-  try
-  {
-   /**llamamos el metodo que permite cargar la ventana*/
-   JFileChooser file=new JFileChooser();
-   file.showOpenDialog(this);
-   /**abrimos el archivo seleccionado*/
-   File abre=file.getSelectedFile();
- 
-   /**recorremos el archivo, lo leemos para plasmarlo
-   *en el area de texto*/
-   if(abre!=null)
-   {     
-      FileReader archivos=new FileReader(abre);
-      BufferedReader lee=new BufferedReader(archivos);
-      while((aux=lee.readLine())!=null)
-      {
-         texto+= aux+ "\n";
-          System.out.println(texto);
-          System.out.println(aux);
-      }
-         lee.close();
-    }    
-   }
-   catch(IOException ex)
-   {
-     JOptionPane.showMessageDialog(null,ex+"" +
-           "\nNo se ha encontrado el archivo",
-                 "ADVERTENCIA!!!",JOptionPane.WARNING_MESSAGE);
+
+    public String getPath(){
+        String path = "", name = "";
+        String texto = "";
+        try {
+            /**
+             * llamamos el metodo que permite cargar la ventana
+             */
+            JFileChooser file = new JFileChooser();
+            file.showOpenDialog(this);
+            /**
+             * abrimos el archivo seleccionado
+             */
+            File abre = file.getSelectedFile();
+            path = file.getSelectedFile().toString();
+             
+            System.out.println("got: "+abre+"\nNombre: "+name);
+            return path;
+        } catch (Exception e) {
+             return null;
+        }
     }
-  return texto;//El texto se almacena en el JTextArea
-}
+    
+    public String getNombre() {
+        String path = "", name = "";
+        String texto = "";
+        try {
+            /**
+             * llamamos el metodo que permite cargar la ventana
+             */
+            JFileChooser file = new JFileChooser();
+            file.showOpenDialog(this);
+            /**
+             * abrimos el archivo seleccionado
+             */
+            File abre = file.getSelectedFile();
+             
+            System.out.println(name);
+            return name;
+        } catch (Exception e) {
+             return null;
+        }
+    }
+
+    private String abrirArchivo() {
+        String aux = "";
+        String texto = "";
+        try {
+            /**
+             * llamamos el metodo que permite cargar la ventana
+             */
+            JFileChooser file = new JFileChooser();
+            file.showOpenDialog(this);
+            /**
+             * abrimos el archivo seleccionado
+             */
+            File abre = file.getSelectedFile();
+
+            /**
+             * recorremos el archivo, lo leemos para plasmarlo en el area de texto
+             */
+            if (abre != null) {
+                FileReader archivos = new FileReader(abre);
+                BufferedReader lee = new BufferedReader(archivos);
+                while ((aux = lee.readLine()) != null) {
+                    texto += aux + "\n";
+                    System.out.println(texto);
+                    System.out.println(aux);
+                }
+                lee.close();
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, ex + ""
+                    + "\nNo se ha encontrado el archivo",
+                    "ADVERTENCIA!!!", JOptionPane.WARNING_MESSAGE);
+        }
+        return texto;//El texto se almacena en el JTextArea
+    }
+
+    public void pathGetter() {
+        try {
+            JFileChooser ch = new JFileChooser();
+            ch.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            System.out.println("escogiste este archivo: " + ch.getSelectedFile().getAbsolutePath());
+
+        } catch (Exception e) {
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -132,9 +187,12 @@ private String abrirArchivo() {
 
     private void CompilarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CompilarButtonActionPerformed
         System.out.println("mamarre");
-        System.out.println(abrirArchivo()); 
-        CompilarButton.setText(text);
-        
+        System.out.println("Nombre: "+getName()+", Ruta Absoluta: "+getPath());
+        CompilarButton.setText(getName());
+        //pathGetter();
+        //System.out.println(abrirArchivo()); 
+        // CompilarButton.setText(text);
+
     }//GEN-LAST:event_CompilarButtonActionPerformed
 
     /**
